@@ -38,16 +38,21 @@ label:last-of-type {
     margin-right: 0;
 }
 
-h1 {
-    font-size: 2em;
-}
-
 section,
 form {
     max-width: 400px;
     margin: 0 auto;
 }
 
-form {
-    max-width: 400px;
+dialog {
+    border-radius: 8px;
+    border: 1px solid #222;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 }
