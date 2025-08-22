@@ -7,13 +7,11 @@
 
 <script src="service.js"></script>
 
-<main style="max-width: 640px; margin: auto">
-    <h1>Login Success</h1>
-    <p id="WelcomeMessage"></p>
-    <pre style="max-width: 100%; overflow-x: auto" id="UserInfo"></pre>
-    <button onclick="skapi.logout().then(()=>location.href = 'index.html')">
-        Logout
-    </button>
+<main>
+    <div class="flex-wrap">
+        <h1 id="WelcomeMessage"></h1>
+        <a href="logout.html">Logout</a>
+    </div>
 
     <script>
         /*
@@ -127,7 +125,11 @@
                     let textAlign =
                         user_id === skapi.user.user_id ? "right" : "left";
 
-                    chatbox.innerHTML += /*html*/ `<div style='word-wrap:break-word; margin-top: 12px; text-align: ${textAlign}'><strong>${username}</strong><br><p class="msg">${rt.message.chatmsg}</p></div>`;
+                    let userClass =
+                        user_id === skapi.user.user_id ? "user" : "";
+
+                    chatbox.innerHTML += /*html*/ `<div style='word-wrap:break-word; margin-top: 12px; text-align: ${textAlign}'><strong>${username}</strong><br><p class="msg ${userClass}">${rt.message.chatmsg}</p></div>`;
+
                     chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
                 }
             } else if (rt.type === "error") {
@@ -325,12 +327,30 @@
                 padding: 8px 12px;
                 border-radius: 8px;
                 width: fit-content;
-                margin-left: auto;
                 position: relative;
                 word-break: break-all;
             }
 
-            .msg:after {
+            .msg:before {
+                border-top: 0 solid #eee;
+                border-left: 0 solid transparent;
+                border-right: 10px solid #eee;
+                border-bottom: 10px solid transparent;
+                content: "";
+                position: absolute;
+                top: 8px;
+                left: -8px;
+            }
+
+            .msg.user {
+                margin-left: auto;
+            }
+
+            .msg.user:before {
+                content: none;
+            }
+
+            .msg.user:after {
                 border-top: 10px solid #eee;
                 border-left: 0 solid transparent;
                 border-right: 10px solid transparent;
@@ -371,25 +391,22 @@
 </dialog>
 
 <dialog id="privateMsgSender">
-    <strong>Private Message To: <span id="privateMsgTo"></span></strong>
-
-    <br /><br />
+    <div class="flex-wrap">
+        <strong>Private Message To: <span id="privateMsgTo"></span></strong>
+        <sup
+            id="closeDialog"
+            onclick="document.getElementById('privateMsgSender').close()"
+            style="cursor: pointer"
+            >X</sup
+        >
+    </div>
 
     <form
         onsubmit="skapi.postRealtime(event, sendTo.user_id).then(()=>{ this.reset(); document.getElementById('privateMsgSender').close(); });"
     >
         <input name="msg" placeholder="Write Message..." required />
-        <input type="submit" value="Send" />
+        <input type="submit" value="Send" style="margin: 4px 0" />
     </form>
-
-    <br />
-
-    <button
-        id="closeDialog"
-        onclick="document.getElementById('privateMsgSender').close()"
-    >
-        Close
-    </button>
 </dialog>
 
 <script>
