@@ -47,6 +47,6 @@ You can check our live demo [Here](https://skapi-chat-html-template.skapi.com/).
 
 ## Important!
 
-Replace the `SERVICE_ID` and `OWNER_ID` value to your own service in `service.js`
+Replace the `SERVICE_ID` value to your own service in `service.js`
 
 You can get your own service ID from [Skapi](https://www.skapi.com)
